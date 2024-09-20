@@ -19,3 +19,5 @@
 
 # Builds
 /build
+/cert.pem
+/key.pem
