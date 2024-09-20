@@ -11,13 +11,13 @@ WIP Toolbox
 
 ```bash
 # create the TLS cert
-$ go run cmd/tls-gen/main.go --host foo.com,0.0.0.0,127.0.0.1
+$ go run cmd/tls-gen/main.go --host 127.0.0.1,localhost
 
 # run the server (serving the created TLS cert)
 $ go run cmd/https-server/main.go
 
 # check with curl
-$ curl --insecure https://localhost:8080
+$ curl --cacert cert.pem https://127.0.0.1:8080
 
 # run the client (allowing only server with that specific TLS cert)
 $ go run cmd/https-client/main.go
