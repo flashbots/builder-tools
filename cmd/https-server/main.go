@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/flashbots/go-template/common"
-	"github.com/urfave/cli/v2" // imports as package "cli"
+	cli "github.com/urfave/cli/v2" // imports as package "cli"
 )
 
 var flags []cli.Flag = []cli.Flag{

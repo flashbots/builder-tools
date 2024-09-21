@@ -10,7 +10,7 @@ import (
 	"os"
 
 	"github.com/flashbots/go-template/common"
-	"github.com/urfave/cli/v2" // imports as package "cli"
+	cli "github.com/urfave/cli/v2"
 )
 
 var flags []cli.Flag = []cli.Flag{
@@ -57,7 +57,8 @@ func runCli(cCtx *cli.Context) error {
 	client := &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
-				RootCAs: roots,
+				RootCAs:    roots,
+				MinVersion: tls.VersionTLS13,
 			},
 		},
 	}

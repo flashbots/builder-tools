@@ -27,6 +27,7 @@ linters:
     - wsl
     - exhaustruct
     - depguard
+    - err113
 
     #
     # Disabled because of generics:
