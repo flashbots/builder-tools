@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/flashbots/go-template/common"
+	"github.com/flashbots/builder-tools/common"
 	cli "github.com/urfave/cli/v2" // imports as package "cli"
 )
 

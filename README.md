@@ -34,18 +34,10 @@ $ go run cmd/status-api/*
 $ echo 111 > pipe.fifo
 $ curl localhost:8082/api/v1/new_event?message=222
 
-# Query events
-$ curl -s localhost:8082/api/v1/events | jq
-[
-  {
-    "ReceivedAt": "2024-09-21T07:51:47.709512Z",
-    "Message": "111"
-  },
-  {
-    "ReceivedAt": "2024-09-21T07:51:49.294175Z",
-    "Message": "222"
-  }
-]
+# Query events (timestamp in UTC)
+$ curl -s localhost:8082/api/v1/events | jq -r  '(.[] | [.received_at, .message]) | @tsv'
+2024-09-21T14:35:37.674863Z     111
+2024-09-21T14:35:42.486016Z     222
 ```
 
 

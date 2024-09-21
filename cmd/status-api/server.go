@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/flashbots/go-utils/httplogger"
+	"github.com/flashbots/builder-tools/common"
 	chi "github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -56,7 +56,7 @@ func NewServer(cfg *HTTPServerConfig) (srv *Server, err error) {
 
 	if cfg.PipeFilename != "" {
 		os.Remove(cfg.PipeFilename)
-		err := syscall.Mkfifo(cfg.PipeFilename, 0o666)
+		err := syscall.Mknod(cfg.PipeFilename, syscall.S_IFIFO|0o666, 0)
 		if err != nil {
 			return nil, err
 		}
@@ -108,7 +108,7 @@ func (s *Server) readPipeInBackground() {
 }
 
 func (s *Server) httpLogger(next http.Handler) http.Handler {
-	return httplogger.LoggingMiddlewareSlog(s.log, next)
+	return common.LoggingMiddlewareSlog(s.log, next)
 }
 
 func (s *Server) Start() {
@@ -154,6 +154,4 @@ func (s *Server) handleGetEvents(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
-	w.WriteHeader(http.StatusOK)
 }
