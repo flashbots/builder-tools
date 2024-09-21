@@ -6,7 +6,7 @@ WIP Toolbox
 - [Create TLS certificate + key (PEM format)](cmd/tls-gen/main.go)
 - [Server using custom TLS certificate](cmd/https-server/main.go)
 - [Client allowing only server using the custom TLS certificate](cmd/https-client/main.go)
-- [Status API server for recording and querying events](cmd/status-api/)
+- [Status API server, with ability for recording and querying events](cmd/status-api/)
 
 ## Usage
 
@@ -24,14 +24,14 @@ $ curl --cacert cert.pem https://127.0.0.1:8080
 $ go run cmd/https-client/main.go
 ```
 
-Status api server that can be used to record and query events.
+Status api server that can be used to record and query events. Events can be added through local named pipe (file `pipe.fifo`), or through HTTP API.
 
 ```bash
 # Start the server
 $ go run cmd/status-api/*
 
 # Add events
-$ curl localhost:8082/api/v1/new_event?message=111
+$ echo 111 > pipe.fifo
 $ curl localhost:8082/api/v1/new_event?message=222
 
 # Query events
