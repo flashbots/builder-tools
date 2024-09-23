@@ -21,3 +21,4 @@
 /build
 /cert.pem
 /key.pem
+/pipe.fifo

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"encoding/json"
 	"errors"
 	"log/slog"
@@ -116,6 +117,21 @@ func (s *Server) Start() {
 	if err := s.srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		s.log.Error("HTTP server failed", "err", err)
 	}
+}
+
+func (s *Server) Shutdown(ctx context.Context) error {
+	s.log.Info("Shutting down HTTP server")
+
+	if err := s.srv.Shutdown(ctx); err != nil {
+		s.log.Error("HTTP server shutdown failed", "err", err)
+	}
+
+	if s.cfg.PipeFilename != "" {
+		os.Remove(s.cfg.PipeFilename)
+	}
+
+	s.log.Info("HTTP server shutdown")
+	return nil
 }
 
 func (s *Server) handleLivenessCheck(w http.ResponseWriter, r *http.Request) {

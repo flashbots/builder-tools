@@ -1,8 +1,12 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/flashbots/builder-tools/common"
 	cli "github.com/urfave/cli/v2" // imports as package "cli"
@@ -23,8 +27,8 @@ var flags []cli.Flag = []cli.Flag{
 
 func main() {
 	app := &cli.App{
-		Name:   "status-logger-api",
-		Usage:  "Server with custom cert",
+		Name:   "status-api",
+		Usage:  "HTTP API for status events",
 		Flags:  flags,
 		Action: runCli,
 	}
@@ -47,6 +51,20 @@ func runCli(cCtx *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	server.Start()
+
+	go func() {
+		server.Start()
+	}()
+
+	// Wait for signal, then graceful shutdown
+	exit := make(chan os.Signal, 1)
+	signal.Notify(exit, os.Interrupt, syscall.SIGTERM)
+	<-exit
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if err = server.Shutdown(ctx); err != nil {
+		log.Error("HTTP shutdown error", "err", err)
+		return err
+	}
 	return nil
 }

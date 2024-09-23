@@ -12,14 +12,14 @@ clean:
 	rm -rf build/
 
 .PHONY: build-cli
-build-cli:
+build:
 	@mkdir -p ./build
-	go build -trimpath -ldflags "-X github.com/flashbots/builder-tools/common.Version=${VERSION}" -v -o ./build/cli cmd/cli/main.go
+	go build -trimpath -ldflags "-X github.com/flashbots/builder-tools/common.Version=${VERSION}" -v -o ./build/status-api cmd/status-api/*.go
 
-.PHONY: build-httpserver
-build-httpserver:
-	@mkdir -p ./build
-	go build -trimpath -ldflags "-X github.com/flashbots/builder-tools/common.Version=${VERSION}" -v -o ./build/httpserver cmd/httpserver/main.go
+# .PHONY: build-httpserver
+# build-httpserver:
+# 	@mkdir -p ./build
+# 	go build -trimpath -ldflags "-X github.com/flashbots/builder-tools/common.Version=${VERSION}" -v -o ./build/httpserver cmd/httpserver/main.go
 
 .PHONY: test
 test:
