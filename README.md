@@ -8,6 +8,12 @@ WIP Toolbox
 - [Client allowing only server using the custom TLS certificate](cmd/https-client/main.go)
 - [Status API server, with ability for recording and querying events](cmd/status-api/)
 
+Canonical way to collapse a TDX [measurements.json](docs/measurements.json) file into a single hash, in a reproducible way:
+
+```bash
+cat measurements.json | jq --sort-keys --compact-output | sha256sum
+```
+
 ## Usage
 
 ```bash
@@ -24,7 +30,9 @@ $ curl --cacert cert.pem https://127.0.0.1:8080
 $ go run cmd/https-client/main.go
 ```
 
-Status api server that can be used to record and query events. Events can be added through local named pipe (file `pipe.fifo`), or through HTTP API.
+### Status API server
+
+The status api server is used to record and query events. Events can be added through local named pipe (file `pipe.fifo`), or through HTTP API.
 
 ```bash
 # Start the server
@@ -40,10 +48,10 @@ $ curl -s localhost:8082/api/v1/events | jq -r  '(.[] | [.received_at, .message]
 2024-09-21T14:35:42.486016Z     222
 ```
 
+---
 
 ## Next Steps
 
 These partly overlap with https://github.com/flashbots/cvm-reverse-proxy:
 - Server that verifies client-side aTLS certificate
 - Client that sends client-side aTLS certificate
-- One server that exposes an aTLS endpoint to serve the local TLS cert, and another server that exposes a TLS endpoint
