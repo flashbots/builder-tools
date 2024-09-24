@@ -43,6 +43,8 @@ func runCli(cCtx *cli.Context) error {
 	pipeFile := cCtx.String("pipe-file")
 
 	log := common.SetupLogger(&common.LoggingOpts{})
+
+	// Setup and start the server (in the background)
 	server, err := NewServer(&HTTPServerConfig{
 		ListenAddr:   listenAddr,
 		Log:          log,
@@ -51,10 +53,7 @@ func runCli(cCtx *cli.Context) error {
 	if err != nil {
 		return err
 	}
-
-	go func() {
-		server.Start()
-	}()
+	go server.Start()
 
 	// Wait for signal, then graceful shutdown
 	exit := make(chan os.Signal, 1)

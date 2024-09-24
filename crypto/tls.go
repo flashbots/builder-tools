@@ -1,13 +1,12 @@
+// Generate a self-signed X.509 certificate for a TLS server.
+//
 // Copyright 2009 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
-// Generate a self-signed X.509 certificate for a TLS server. Outputs to
-// 'cert.pem' and 'key.pem' and will overwrite existing files.
-
+//
 // Source: https://go.dev/src/crypto/tls/generate_cert.go
-// See also: https://gist.github.com/denji/12b3a568f092ab951456
 
+// Package crypto provides helpers for key generation
 package crypto
 
 import (
@@ -43,7 +42,7 @@ func publicKey(priv any) any {
 	case *ecdsa.PrivateKey:
 		return &k.PublicKey
 	case ed25519.PrivateKey:
-		return k.Public().(ed25519.PublicKey)
+		return k.Public().(ed25519.PublicKey) //nolint:forcetypeassert
 	default:
 		return nil
 	}
