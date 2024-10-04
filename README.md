@@ -11,7 +11,7 @@ WIP Toolbox
 Canonical way to collapse a TDX [measurements.json](docs/measurements.json) file into a single hash, in a reproducible way:
 
 ```bash
-cat measurements.json | jq --sort-keys --compact-output | sha256sum
+cat measurements.json | jq --sort-keys --compact-output --join-output | sha256sum
 ```
 
 ## Usage
