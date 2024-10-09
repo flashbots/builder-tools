@@ -14,7 +14,7 @@ clean:
 .PHONY: build-cli
 build:
 	@mkdir -p ./build
-	go build -trimpath -ldflags "-X github.com/flashbots/builder-tools/common.Version=${VERSION}" -v -o ./build/status-api cmd/status-api/*.go
+	go build -trimpath -ldflags "-X github.com/flashbots/builder-tools/common.Version=${VERSION}" -v -o ./build/system-api cmd/system-api/*.go
 
 # .PHONY: build-httpserver
 # build-httpserver:

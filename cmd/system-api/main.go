@@ -27,7 +27,7 @@ var flags []cli.Flag = []cli.Flag{
 
 func main() {
 	app := &cli.App{
-		Name:   "status-api",
+		Name:   "system-api",
 		Usage:  "HTTP API for status events",
 		Flags:  flags,
 		Action: runCli,
