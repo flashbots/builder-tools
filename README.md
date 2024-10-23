@@ -10,17 +10,6 @@ WIP Toolbox
 
 ---
 
-## Single-Hash TDX Measurement
-
-We use this method to collapse a TDX [measurements JSON object](docs/measurements.json) into a single SHA256 hash, in a reproducible way (sort keys, remove whitespace, print without newline):
-
-```bash
-cat docs/measurements.json | jq --sort-keys --compact-output --join-output | sha256sum
-59952c2557da91cdafb9361d41d6971fc2b0be1a85ad57134e38714b266ff581  -
-```
-
----
-
 ## Usage
 
 ```bash
