@@ -162,6 +162,21 @@ func (s *Server) handleGetEvents(w http.ResponseWriter, r *http.Request) {
 	s.eventsLock.RLock()
 	defer s.eventsLock.RUnlock()
 
+	// respond either as JSON or plain text
+	if r.URL.Query().Get("format") == "text" {
+		// write events as plain text response
+		w.Header().Set("Content-Type", "text/plain")
+		for _, event := range s.events {
+			_, err := w.Write([]byte(event.ReceivedAt.Format("2006-01-02 15:04:05 UTC") + " \t " + event.Message + "\n"))
+			if err != nil {
+				s.log.Error("Failed to write event", "err", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+		}
+		return
+	}
+
 	// write events as JSON response
 	w.Header().Set("Content-Type", "application/json")
 	err := json.NewEncoder(w).Encode(s.events)
