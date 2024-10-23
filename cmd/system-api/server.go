@@ -18,7 +18,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-var MaxEvents = 100
+var MaxEvents = common.GetEnvInt("MAX_EVENTS", 1000)
 
 type HTTPServerConfig struct {
 	ListenAddr   string
