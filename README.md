@@ -38,8 +38,8 @@ $ go run cmd/system-api/*
 $ echo "hello world" > pipe.fifo
 $ curl localhost:8082/api/v1/new_event?message=this+is+a+test
 
-# Query events (timestamp in UTC)
-$ curl -s localhost:8082/api/v1/events | jq -r  '(.[] | [.received_at, .message]) | @tsv'
-2024-09-24T10:45:50.774339Z     hello world
-2024-09-24T10:46:02.01221Z      this is a test
+# Query events (plain text or JSON is supported)
+$ curl -s localhost:8082/api/v1/events?format=text
+2024-10-23T11:59:35Z     hello world
+2024-10-23T11:59:36Z     hello world
 ```

@@ -167,7 +167,7 @@ func (s *Server) handleGetEvents(w http.ResponseWriter, r *http.Request) {
 		// write events as plain text response
 		w.Header().Set("Content-Type", "text/plain")
 		for _, event := range s.events {
-			_, err := w.Write([]byte(event.ReceivedAt.Format("2006-01-02 15:04:05 UTC") + " \t " + event.Message + "\n"))
+			_, err := w.Write([]byte(event.ReceivedAt.Format(time.RFC3339) + " \t " + event.Message + "\n"))
 			if err != nil {
 				s.log.Error("Failed to write event", "err", err)
 				w.WriteHeader(http.StatusInternalServerError)
