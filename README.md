@@ -40,6 +40,6 @@ $ curl localhost:8082/api/v1/new_event?message=this+is+a+test
 
 # Query events (plain text or JSON is supported)
 $ curl -s localhost:8082/api/v1/events?format=text
-2024-10-23T11:59:35Z     hello world
-2024-10-23T11:59:36Z     hello world
+2024-10-23T12:04:01Z     hello world
+2024-10-23T12:04:07Z     this is a test
 ```
