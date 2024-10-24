@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/flashbots/builder-tools/common"
+	"github.com/flashbots/system-api/common"
 	cli "github.com/urfave/cli/v2" // imports as package "cli"
 )
 
@@ -27,10 +27,11 @@ var flags []cli.Flag = []cli.Flag{
 
 func main() {
 	app := &cli.App{
-		Name:   "system-api",
-		Usage:  "HTTP API for status events",
-		Flags:  flags,
-		Action: runCli,
+		Name:    "system-api",
+		Usage:   "HTTP API for status events",
+		Version: common.Version,
+		Flags:   flags,
+		Action:  runCli,
 	}
 
 	if err := app.Run(os.Args); err != nil {
@@ -42,7 +43,9 @@ func runCli(cCtx *cli.Context) error {
 	listenAddr := cCtx.String("listen-addr")
 	pipeFile := cCtx.String("pipe-file")
 
-	log := common.SetupLogger(&common.LoggingOpts{})
+	log := common.SetupLogger(&common.LoggingOpts{
+		Version: common.Version,
+	})
 
 	// Setup and start the server (in the background)
 	server, err := NewServer(&HTTPServerConfig{
