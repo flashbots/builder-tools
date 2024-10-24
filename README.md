@@ -1,34 +1,24 @@
-# builder-tools
+# System API
 
-WIP Toolbox
+System API is used as interface between TDX services and the operator.
 
-- [Create ECDSA keypair](cmd/ecdsa-gen/main.go)
-- [Create TLS certificate + key (PEM format)](cmd/tls-gen/main.go)
-- [Server using custom TLS certificate](cmd/https-server/main.go)
-- [Client allowing only server using the custom TLS certificate](cmd/https-client/main.go)
-- [Status API server, with ability for recording and querying events](cmd/system-api/)
+It currently does the following things:
+
+- **Event log**: Services inside a TDX instance can record events they want exposed to the operator
+ used to record and query events. Useful to record service startup/shutdown, errors, progress updates,
+ hashes, etc.
+
+Future features:
+
+- Operator can set a password for http-basic-auth (persisted, for all future requests)
+- Operator-provided configuration (i.e. config values, secrets, etc.)
+- Restart of services / execution of scripts
 
 ---
 
-## Usage
+ ## Event log
 
-```bash
-# create the TLS cert (cert.pem) and key (key.pem)
-$ go run cmd/tls-gen/main.go --host 127.0.0.1,localhost
-
-# run the server (serving the created TLS cert)
-$ go run cmd/https-server/main.go
-
-# check with curl
-$ curl --cacert cert.pem https://127.0.0.1:8080
-
-# run the client (allowing only server with that specific TLS cert)
-$ go run cmd/https-client/main.go
-```
-
-### System API server
-
-The system api server is used to record and query events. Events can be added through local named pipe (file `pipe.fifo`), or through HTTP API.
+ Events can be added via local named pipe (i.e. file `pipe.fifo`) or through HTTP API:
 
 ```bash
 # Start the server
