@@ -3,5 +3,5 @@ package common
 var Version = "dev"
 
 const (
-	PackageName = "github.com/flashbots/builder-tools"
+	PackageName = "github.com/flashbots/system-api"
 )

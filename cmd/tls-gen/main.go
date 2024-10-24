@@ -18,7 +18,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/flashbots/builder-tools/crypto"
+	"github.com/flashbots/system-api/crypto"
 )
 
 var (

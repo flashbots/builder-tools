@@ -1,4 +1,4 @@
-module github.com/flashbots/builder-tools
+module github.com/flashbots/system-api
 
 go 1.22
 
